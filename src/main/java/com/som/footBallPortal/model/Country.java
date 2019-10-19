@@ -1,5 +1,6 @@
 package com.som.footBallPortal.model;
 
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -9,9 +10,19 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Country {
 	
 	@Id
-	public String country_id;
+	private ObjectId _id;
 	
-	public String country_name;
+	private String country_id;
+	
+	private String country_name;
+	
+	public ObjectId get_id() {
+		return _id;
+	}
+
+	public void set_id(ObjectId _id) {
+		this._id = _id;
+	}
 
 	public String getCountry_id() {
 		return country_id;

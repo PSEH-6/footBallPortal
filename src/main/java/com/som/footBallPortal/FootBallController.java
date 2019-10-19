@@ -1,11 +1,14 @@
 package com.som.footBallPortal;
 
 import javax.annotation.PostConstruct;
+import javax.validation.Valid;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.som.footBallPortal.model.Country;
 import com.som.footBallPortal.repositories.CountryRepository;
 import com.som.footBallPortal.repositories.LeagueRepository;
 import com.som.footBallPortal.repositories.StandingsRepository;
@@ -120,6 +124,15 @@ public class FootBallController {
 			logger.error("Error while fetching standings info", e);
 			return "{ 'error': 'Error while fetching standings info'}";
 		}
+	}
+	
+	@RequestMapping(value = "country", method = RequestMethod.POST)
+	public Country createCountry(@Valid @RequestBody Country country) {
+		country.set_id(ObjectId.get());
+		countriesRepo.save(country);
+
+		logger.info("Created new employee with Id: " + country.getCountry_id());
+		return country;
 	}
 
 }
