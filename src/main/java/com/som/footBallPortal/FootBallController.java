@@ -19,6 +19,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.som.footBallPortal.model.Country;
+import com.som.footBallPortal.model.League;
+import com.som.footBallPortal.model.Standing;
+import com.som.footBallPortal.model.Team;
 import com.som.footBallPortal.repositories.CountryRepository;
 import com.som.footBallPortal.repositories.LeagueRepository;
 import com.som.footBallPortal.repositories.StandingsRepository;
@@ -131,8 +134,36 @@ public class FootBallController {
 		country.set_id(ObjectId.get());
 		countriesRepo.save(country);
 
-		logger.info("Created new employee with Id: " + country.getCountry_id());
+		logger.info("Created new country with Id: " + country.getCountry_id());
 		return country;
 	}
+	
+	@RequestMapping(value = "league", method = RequestMethod.POST)
+	public League createLeague(@Valid @RequestBody League league) {
+		league.set_id(ObjectId.get());
+		leaguesRepo.save(league);
 
+		logger.info("Created new league with Id: " + league.getLeague_id());
+		return league;
+	}
+
+	@RequestMapping(value = "team", method = RequestMethod.POST)
+	public Team createTeam(@Valid @RequestBody Team team) {
+		team.set_id(ObjectId.get());
+		teamsRepo.save(team);
+
+		logger.info("Created new team with Id: " + team.getTeam_id());
+		return team;
+	}
+	
+	@RequestMapping(value = "standings", method = RequestMethod.POST)
+	public Standing createLeague(@Valid @RequestBody Standing standing) {
+		standing.set_id(ObjectId.get());
+		standingsRepo.save(standing);
+
+		logger.info("Created new standing with Id: " + standing.getCountry().getCountry_id() + ":" 
+		+ standing.getLeague().getLeague_id() + ":" + standing.getTeam().getTeam_id());
+		
+		return standing;
+	}
 }
